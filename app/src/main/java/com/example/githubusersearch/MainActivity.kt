@@ -19,15 +19,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val userIdInput = findViewById<EditText>(R.id.user_id_input)
-//        val content = findViewById<TextView>(R.id.content)
+        val content = findViewById<TextView>(R.id.content)
 
-        val retrofit = Retrofit.Builder().baseUrl("https://api.github.com/users/youjin0411")
+        val retrofit = Retrofit.Builder().baseUrl("https://api.github.com")
             .addConverterFactory(
                 GsonConverterFactory.create(
-                    GsonBuilder().registerTypeAdapter(
-                        GitHubUser::class.java,
-                        GitHubUserDeserializer()
-                    ).create()
+//                    GsonBuilder().registerTypeAdapter(
+//                        GitHubUser::class.java,
+//                        GitHubUserDeserializer()
+//                    ).create()
                 )
             ).build()
 
@@ -36,11 +36,13 @@ class MainActivity : AppCompatActivity() {
         val classInfo: Class<GitHubAPIService> = GitHubAPIService::class.java
         findViewById<Button>(R.id.search_btn).setOnClickListener{
             val id = userIdInput.text.toString()
-            val apiCallForData = apiService.getUser(id)
+            val apiCallForData = apiService.getUser(id,"token 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")
             apiCallForData.enqueue(object : Callback<GitHubUser>{
                 override fun onResponse(call: Call<GitHubUser>, response: Response<GitHubUser>) {
                     val data= response.body()!!
                     Log.d("mytag", data.toString())
+
+                    content.text = "login: ${data.login}\nid: ${data.id}"
                 }
 
                 override fun onFailure(call: Call<GitHubUser>, t: Throwable) {}
