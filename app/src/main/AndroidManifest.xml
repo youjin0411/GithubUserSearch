@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUserSearch">
         <activity
+            android:name=".GitHubUserRepositoryListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

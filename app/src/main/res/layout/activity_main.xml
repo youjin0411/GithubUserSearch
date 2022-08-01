@@ -24,8 +24,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
 
+    </LinearLayout>
+    <Button
+        android:text="유저 저장소 검색"
+        android:id="@+id/usersave_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ImageView
         android:id="@+id/avatar_img"
         android:layout_width="120dp"
