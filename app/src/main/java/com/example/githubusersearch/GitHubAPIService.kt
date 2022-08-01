@@ -24,7 +24,8 @@ data class GitHubUser(
     val id: Int,
     val name: String?,
     val followers : Int,
-    val following: Int
+    val following: Int,
+    val avatar_url : String
 )
 
 /*
