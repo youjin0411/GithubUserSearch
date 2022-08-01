@@ -1,5 +1,6 @@
 package com.example.githubusersearch
 
+import android.graphics.drawable.Drawable
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -26,6 +27,11 @@ interface GitHubAPIService {
         @Header("Authorization") pat: String
     ):Call<List<GitHubRepo>>
 }
+
+data class UserData(
+    var id: String,
+    val name: String
+)
 
 data class GitHubRepo(
    val name : String,

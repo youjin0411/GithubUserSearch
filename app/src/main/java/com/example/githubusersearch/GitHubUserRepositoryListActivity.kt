@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
 import retrofit2.Call
@@ -20,9 +22,9 @@ class GitHubUserRepositoryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_git_hub_user_repository_list)
 
-        var result = findViewById<TextView>(R.id.result)
+        var result = findViewById<RecyclerView>(R.id.lstUser)
         val id = intent.getStringExtra("id")!!
-        result.text = "아이디 :${id}"
+//        result.text = "아이디 :${id}"
         Log.d("mytag", id)
 
         val retrofit = Retrofit.Builder()
@@ -32,16 +34,21 @@ class GitHubUserRepositoryListActivity : AppCompatActivity() {
         val apiService = retrofit.create(GitHubAPIService::class.java)
         val apiCallForData = apiService.getRepos(
             id,
-            "token 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"
+            "token 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"
         )
         apiCallForData.enqueue(object : Callback<List<GitHubRepo>> {
             override fun onResponse(call: Call<List<GitHubRepo>>, response: Response<List<GitHubRepo>>) {
                 val data = response.body()!!
                 Log.d("mytag", data.toString())
+
+                var listview = findViewById<RecyclerView>(R.id.lstUser)
+                listview.layoutManager = LinearLayoutManager(this@GitHubUserRepositoryListActivity)
+                listview.adapter = GitHubAdapter(data)
+                listview.setHasFixedSize(true)
             }
             override fun onFailure(call: Call<List<GitHubRepo>>, t: Throwable) {
-                TODO("Not yet implemented")
             }
         })
+
     }
 }
