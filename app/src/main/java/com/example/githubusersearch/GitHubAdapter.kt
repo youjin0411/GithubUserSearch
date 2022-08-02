@@ -24,8 +24,8 @@ class GitHubAdapter(val dataList: List<GitHubRepo>)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val data = dataList[position]
 
-        holder.view.findViewById<TextView>(R.id.repo_name).text = "${data.name}\n"
-        holder.view.findViewById<TextView>(R.id.repo_description).text = "${data.description}\n"
+        holder.view.findViewById<TextView>(R.id.repo_name).text = "프로젝트명 : ${data.name} 💨\n"
+        holder.view.findViewById<TextView>(R.id.repo_description).text = "설명 : ${data.description}\n"
         holder.view.findViewById<TextView>(R.id.repo_forks_count).text = "${data.forks_count}\n"
         holder.view.findViewById<TextView>(R.id.repo_stargazers_count).text = "${data.stargazers_count}\n"
         holder.view.findViewById<TextView>(R.id.repo_watchers_count).text = "${data.watchers_count}\n"

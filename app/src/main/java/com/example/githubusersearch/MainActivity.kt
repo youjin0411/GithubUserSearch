@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import com.bumptech.glide.Glide
 import com.google.gson.GsonBuilder
@@ -37,40 +38,44 @@ class MainActivity : AppCompatActivity() {
 
 
         val classInfo: Class<GitHubAPIService> = GitHubAPIService::class.java
-        findViewById<Button>(R.id.search_btn).setOnClickListener{
+        findViewById<Button>(R.id.search_btn).setOnClickListener {
             var id = userIdInput.text.toString()
-            val apiCallForData = apiService.getUser(id,"token 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")
+            if (id.isBlank()) {
+                Toast.makeText(this, "유저 아이디를 입력하세요.", Toast.LENGTH_SHORT).show()
+            } else {
+                val apiCallForData =
+                    apiService.getUser(id, "token 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")
 
-            userbtn.setOnClickListener{
-                val intent = Intent(this,GitHubUserRepositoryListActivity::class.java)
-                intent.putExtra("id",userIdInput.text.toString())
-                startActivity(intent)
-            }
-
-            apiCallForData.enqueue(object : Callback<GitHubUser>{
-                override fun onResponse(call: Call<GitHubUser>, response: Response<GitHubUser>) {
-                    if (response.code().toString().startsWith("4")) {
-                        Toast.makeText(this@MainActivity,"유저가 없습니다.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Log.d("mytag", response.code().toString())
-                        val data = response.body()!!
-                        Log.d("mytag", data.toString())
-
-                        content.text = "login: ${data.login}\nid: ${data.id}\nname: ${data.name}"
-                        Glide.with(this@MainActivity)
-                            .load(data?.avatarUrl)
-                            .into(imageView)
-                    }
+                userbtn.setOnClickListener {
+                    val intent = Intent(this, GitHubUserRepositoryListActivity::class.java)
+                    intent.putExtra("id", userIdInput.text.toString())
+                    startActivity(intent)
                 }
+                apiCallForData.enqueue(object : Callback<GitHubUser> {
+                    override fun onResponse(
+                        call: Call<GitHubUser>,
+                        response: Response<GitHubUser>
+                    ) {
+                        if (response.code().toString().startsWith("4")) {
+                            Toast.makeText(this@MainActivity, "유저가 없습니다.", Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Log.d("mytag", response.code().toString())
+                            findViewById<Button>(R.id.usersave_button).visibility = View.VISIBLE
+                            val data = response.body()!!
+                            Log.d("mytag", data.toString())
 
-                override fun onFailure(call: Call<GitHubUser>, t: Throwable) {}
-            })
+                            content.text =
+                                "login: ${data.login}\nid: ${data.id}\nname: ${data.name}"
+                            Glide.with(this@MainActivity)
+                                .load(data?.avatarUrl)
+                                .into(imageView)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<GitHubUser>, t: Throwable) {}
+                })
+            }
         }
-
-
-
-
-
-
     }
 }
