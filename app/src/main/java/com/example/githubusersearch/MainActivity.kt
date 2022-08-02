@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "유저 아이디를 입력하세요.", Toast.LENGTH_SHORT).show()
             } else {
                 val apiCallForData =
-                    apiService.getUser(id, "token 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")
+                    apiService.getUser(id, "token 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")
 
                 userbtn.setOnClickListener {
                     val intent = Intent(this, GitHubUserRepositoryListActivity::class.java)
