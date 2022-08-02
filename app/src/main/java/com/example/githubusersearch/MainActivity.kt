@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val classInfo: Class<GitHubAPIService> = GitHubAPIService::class.java
         findViewById<Button>(R.id.search_btn).setOnClickListener{
             var id = userIdInput.text.toString()
-            val apiCallForData = apiService.getUser(id,"token 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")
+            val apiCallForData = apiService.getUser(id,"token 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")
 
             userbtn.setOnClickListener{
                 val intent = Intent(this,GitHubUserRepositoryListActivity::class.java)

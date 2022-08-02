@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class GitHubAdapter(val dataList: List<GitHubRepo>)
     :RecyclerView.Adapter<GitHubAdapter.ItemViewHolder>()
@@ -23,9 +24,11 @@ class GitHubAdapter(val dataList: List<GitHubRepo>)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val data = dataList[position]
 
-        holder.view.findViewById<TextView>(R.id.list).text = "${data.name}\n${data.description}\n${data.forks_count}\n" +
-                "${data.stargazers_count},\n" +
-                "${data.watchers_count}\n"
+        holder.view.findViewById<TextView>(R.id.repo_name).text = "${data.name}\n"
+        holder.view.findViewById<TextView>(R.id.repo_description).text = "${data.description}\n"
+        holder.view.findViewById<TextView>(R.id.repo_forks_count).text = "${data.forks_count}\n"
+        holder.view.findViewById<TextView>(R.id.repo_stargazers_count).text = "${data.stargazers_count}\n"
+        holder.view.findViewById<TextView>(R.id.repo_watchers_count).text = "${data.watchers_count}\n"
 
         holder.view.setOnClickListener {
             var intent = Intent(
